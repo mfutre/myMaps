@@ -1,0 +1,108 @@
+{
+    "version": 8,
+    "name": "Albers USA",
+    "metadata": {
+        "mapbox:autocomposite": true,
+        "mapbox:type": "template",
+        "mapbox:sdk-support": {
+            "android": "9.3.0",
+            "ios": "5.10.0",
+            "js": "1.10.0"
+        },
+        "mapbox:groups": {},
+        "mapbox:uiParadigm": "layers"
+    },
+    "center": [-0.7728907780006011, -0.24310491018134428],
+    "zoom": 3.565749355901551,
+    "bearing": 0,
+    "pitch": 0,
+    "sources": {
+        "composite": {
+            "url": "mapbox://mbxsolutions.albersusa-points,mbxsolutions.albersusa",
+            "type": "vector"
+        }
+    },
+    "sprite": "mapbox://sprites/msylla1/cm6a74pp5005e01s294wp7d5l/ck2u8j60r58fu0sgyxrigm3cu",
+    "glyphs": "mapbox://fonts/mapbox/{fontstack}/{range}.pbf",
+    "layers": [
+        {
+            "id": "background",
+            "type": "background",
+            "layout": {},
+            "paint": {"background-color": "#f7f7f7"}
+        },
+        {
+            "id": "counties",
+            "type": "fill",
+            "source": "composite",
+            "source-layer": "albersusa",
+            "filter": ["match", ["get", "type"], ["county"], true, false],
+            "layout": {},
+            "paint": {
+                "fill-color": [
+                    "to-color",
+                    [
+                        "concat",
+                        "hsl(",
+                        ["*", ["%", ["id"], 100], 5],
+                        ", 40%, 80%)"
+                    ]
+                ]
+            }
+        },
+        {
+            "id": "state-boundaries",
+            "type": "line",
+            "source": "composite",
+            "source-layer": "albersusa",
+            "filter": ["match", ["get", "type"], ["state"], true, false],
+            "layout": {},
+            "paint": {"line-color": "hsl(0, 0%, 34%)"}
+        },
+        {
+            "id": "county-boundaries",
+            "type": "line",
+            "source": "composite",
+            "source-layer": "albersusa",
+            "filter": ["match", ["get", "type"], ["county"], true, false],
+            "layout": {},
+            "paint": {"line-color": "#8c8c8c", "line-width": 0.5}
+        },
+        {
+            "id": "county-points",
+            "type": "symbol",
+            "source": "composite",
+            "source-layer": "albersusa-points",
+            "filter": ["match", ["get", "type"], ["county"], true, false],
+            "layout": {
+                "text-field": ["to-string", ["get", "county_fips"]],
+                "text-font": ["Overpass Mono Bold", "Arial Unicode MS Regular"]
+            },
+            "paint": {
+                "text-halo-width": 1,
+                "text-halo-color": "#000000",
+                "text-color": "#ffffff",
+                "text-opacity": ["step", ["zoom"], 0, 6, 1, 22, 1]
+            }
+        },
+        {
+            "id": "state-points",
+            "type": "symbol",
+            "source": "composite",
+            "source-layer": "albersusa-points",
+            "filter": ["match", ["get", "type"], ["state"], true, false],
+            "layout": {
+                "text-field": ["to-string", ["get", "state_abbrev"]],
+                "text-font": ["Overpass Mono Bold", "Arial Unicode MS Regular"]
+            },
+            "paint": {"text-halo-width": 1, "text-halo-color": "#ffffff"}
+        }
+    ],
+    "created": "2025-01-24T03:22:23.129Z",
+    "modified": "2025-01-24T03:22:23.129Z",
+    "id": "cm6a74pp5005e01s294wp7d5l",
+    "owner": "msylla1",
+    "visibility": "private",
+    "protected": false,
+    "draft": false
+}
